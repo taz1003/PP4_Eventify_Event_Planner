@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic import ListView
+from .models import Event
 
 # Create your views here.
 
 
-def index(request):
-    return HttpResponse("Hello, World!")
+class EventList(ListView):
+    model = Event
+    template_name = "events/index.html"
