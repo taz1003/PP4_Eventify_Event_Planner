@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.views.generic import ListView
+from django.utils import timezone
 from .models import Event
 
 # Create your views here.
@@ -8,3 +8,5 @@ from .models import Event
 class EventList(ListView):
     model = Event
     template_name = "events/index.html"
+    context_object_name = 'events'
+    paginate_by = 6

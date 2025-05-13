@@ -1,4 +1,7 @@
-{% load static %}
+{% load static %} 
+{% url 'account_login' as login_url %} 
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,8 +9,14 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Eventify</title>
+        <!-- Fontawesome -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 		<!-- Bootstrap 5 CSS -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+			crossorigin="anonymous" />
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 	</head>
@@ -37,9 +46,8 @@
 							>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% if request.path == about_url %}" aria-current="page{% endif %}active" href="{% url 'about' %}"
-								>About</a
-							>
+							<!-- {% if request.path == about_url %} -->
+							<a class="nav-link" aria-current="page{% endif %}active" href="#">About</a>
 						</li>
 						{% if user.is_authenticated %}
 						<li class="nav-item">
@@ -76,10 +84,91 @@
 
 		<!-- Main Content -->
 		{% block content %}
-        
         {% endblock %}
 
+		<!-- Footer -->
+		<footer class="bg-body-tertiary text-center">
+			<!-- Grid container -->
+			<div class="container p-4 pb-0">
+				<!-- Section: Social media -->
+				<section class="mb-4">
+					<!-- Facebook -->
+					<a
+						data-mdb-ripple-init
+						class="btn text-white btn-floating m-1"
+						style="background-color: #3b5998"
+						href="#!"
+						role="button"
+						><i class="fab fa-facebook-f"></i
+					></a>
+
+					<!-- Twitter -->
+					<a
+						data-mdb-ripple-init
+						class="btn text-white btn-floating m-1"
+						style="background-color: #55acee"
+						href="#!"
+						role="button"
+						><i class="fab fa-twitter"></i
+					></a>
+
+					<!-- Google -->
+					<a
+						data-mdb-ripple-init
+						class="btn text-white btn-floating m-1"
+						style="background-color: #dd4b39"
+						href="#!"
+						role="button"
+						><i class="fab fa-google"></i
+					></a>
+
+					<!-- Instagram -->
+					<a
+						data-mdb-ripple-init
+						class="btn text-white btn-floating m-1"
+						style="background-color: #ac2bac"
+						href="#!"
+						role="button"
+						><i class="fab fa-instagram"></i
+					></a>
+
+					<!-- Linkedin -->
+					<a
+						data-mdb-ripple-init
+						class="btn text-white btn-floating m-1"
+						style="background-color: #0082ca"
+						href="#!"
+						role="button"
+						><i class="fab fa-linkedin-in"></i
+					></a>
+					<!-- Github -->
+					<a
+						data-mdb-ripple-init
+						class="btn text-white btn-floating m-1"
+						style="background-color: #333333"
+						href="#!"
+						role="button"
+						><i class="fab fa-github"></i
+					></a>
+				</section>
+				<!-- Section: Social media -->
+			</div>
+			<!-- Grid container -->
+
+			<!-- Copyright -->
+			<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05)">
+				© 2025 Copyright:
+				<a class="text-body" href="#">Eventify Event planner</a>
+			</div>
+			<!-- Copyright -->
+		</footer>
+
+		<!-- JS -->
+		<script src="{% static 'js/script.js' %}"></script>
 		<!-- Bootstrap JS -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+			crossorigin="anonymous"></script>
 	</body>
 </html>
