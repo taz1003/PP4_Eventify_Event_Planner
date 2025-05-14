@@ -1,0 +1,29 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9ff;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #5e73c2;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar .nav-link{
+    color: #f8f9ff;
+}
+
+/* Main content */
+.container-fluid {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Event list */
+.list-group-item {
+    background-color: #fff;
+    border: 1px solid #e6f4f1;
+    margin-bottom: 10px;
+    transition: all 0.5s ease-in-out;
+}
