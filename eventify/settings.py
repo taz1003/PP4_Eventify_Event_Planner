@@ -28,7 +28,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '.127.0.0.1', 'localhost',]
 
@@ -53,6 +53,14 @@ INSTALLED_APPS = [
     'cloudinary',
     'events',
 ]
+
+# Summernote config
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        'width': '100%',
+        'height': '400px',
+    }
+}
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
