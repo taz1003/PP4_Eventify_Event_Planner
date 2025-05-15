@@ -31,7 +31,7 @@ class CommentAdmin(SummernoteModelAdmin):
 class AttendanceAdmin(SummernoteModelAdmin):
 
     list_display = ('user', 'event', 'status', 'updated_on')
-    list_filter = ('satus', 'updated_on')
+    list_filter = ('status', 'updated_on')
     search_fields = ('user__username', 'event__title')
     date_hierarchy = 'updated_on'
     list_editable = ('status',)
