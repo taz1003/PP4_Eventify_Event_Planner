@@ -11,7 +11,6 @@ class EventsAdmin(SummernoteModelAdmin):
     list_filter = ('date', 'created_on')
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('description',)
-    raw_id_fields = ('creator',)
     date_hierarchy = 'date'
     ordering = ('-date',)
 

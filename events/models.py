@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from cloudinary.models import CloudinaryField
 
 # Create your models here.
@@ -7,7 +8,7 @@ from cloudinary.models import CloudinaryField
 
 class Event(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(default="a_slug", max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True)
     description = models.TextField()
     date = models.DateTimeField()
     location = models.CharField(max_length=200, blank=True)
@@ -19,6 +20,10 @@ class Event(models.Model):
         related_name='attending_events',
         blank=True
     )
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Event, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"Event: {self.title} created by {self.creator}"
