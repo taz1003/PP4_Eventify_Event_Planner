@@ -9,7 +9,7 @@
 			{% if events %}
 			    <div class="list-group">
 			    	{% for event in events %}
-			    	    <a href="#" class="list-group-item list-group-item-action">
+			    	    <a href="{% url 'event_detail' event.slug %}" class="list-group-item list-group-item-action">
 			    	    	<div class="d-flex w-100 justify-content-between">
 			    	    		<h4 class="mb-1">{{ event.title }}</h4>
 			    	    		<small>{{ event.date }}</small>
