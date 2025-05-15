@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponseRedirect
-from django.views import generic
 from django.views.generic import ListView
 from .models import Event, Comment
 from django.contrib import messages

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Comment
+from .models import Event, Comment, Attendance
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -25,3 +25,13 @@ class CommentAdmin(SummernoteModelAdmin):
 
     def approve_comments(self, request, queryset):
         queryset.update(approved=True)
+
+
+@admin.register(Attendance)
+class AttendanceAdmin(SummernoteModelAdmin):
+
+    list_display = ('user', 'event', 'status', 'updated_on')
+    list_filter = ('satus', 'updated_on')
+    search_fields = ('user__username', 'event__title')
+    date_hierarchy = 'updated_on'
+    list_editable = ('status',)
