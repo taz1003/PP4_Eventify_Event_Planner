@@ -1,23 +1,39 @@
 {% extends 'base.html' %}
+{% load static cloudinary %}
 
 {% block content %}
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 mx-auto">
-			<h1 class="mb-4">Events</h1>
+			<div class="row">
+				<h1>Upcoming Events</h1>
+				<a href="#" class="btn btn-primary">
+					<i class="fas fa-plus-circle"></i> Create Event
+				</a>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-8 mt-3">
+					{% for event in events %}
+					<div class="card mb-4">
+						<div class="card-body">
+							<div class="image-container">
+								{% if event.featured_image %}
+									{% cloudinary event.featured_image class="card-img-top" alt=event.title %}
+								{% else %}
+									<img src="{% static 'images/default.jpg' %}" alt="default event image" class="card-img-top">
+								{% endif %}
+								<div class="image-flash">
+                                    <p class="author">Host: {{ event.creator.username }}</p>
+                                </div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
 
 			{% if events %}
-			    <div class="list-group">
-			    	{% for event in events %}
-			    	    <a href="{% url 'event_detail' event.slug %}" class="list-group-item list-group-item-action">
-			    	    	<div class="d-flex w-100 justify-content-between">
-			    	    		<h4 class="mb-1">{{ event.title }}</h4>
-			    	    		<small>{{ event.date }}</small>
-			    	    	</div>
-			    	    	<p class="mb-1">{{ event.description }}</p>
-			    	    	<small>Hosted by:<strong>{{ event.creator }}</strong></small>
-			    	    </a>
-                    {% endfor %}
+			    <div class="row row-cols-1 row-cols-md-2 g-4">
 			    </div>
             {% else %}
                 <div class="alert alert-info">
