@@ -19,6 +19,7 @@ def event_detail(request, slug):
     event = get_object_or_404(Event, slug=slug)
     comments = event.comments.filter(approved=True).order_by("-created_on")
     comment_count = comments.count()
+    comment_form = CommentForm()
 
     if request.method == "POST":
         comment_form = CommentForm(data=request.POST)
@@ -31,16 +32,15 @@ def event_detail(request, slug):
                 request, messages.SUCCESS,
                 'Comment submitted and awaiting approval'
             )
+        return redirect('event_detail', slug=event.slug)
 
-        comment_form = CommentForm()
-
-        return render(
-            request,
-            "events/event_detail.html",
-            {
-                "event": event,
-                "comments": comment,
-                "comment_count": comment_count,
-                "comment_form": comment_form
-            },
-        )
+    return render(
+        request,
+        "events/event_detail.html",
+        {
+            "event": event,
+            "comments": comment,
+            "comment_count": comment_count,
+            "comment_form": comment_form
+        },
+    )

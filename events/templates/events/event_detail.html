@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load cloudinary %}
+
 {% block content %}
 
 <div class="masthead">
@@ -9,19 +11,22 @@
             <div class="col-md-8 masthead-text">
                 <h1 class="event-title">{{ event.title }}</h1>
                 <p class="event-subtitle">
-                    Hosted by {{ event.creator }} | {{ event.date|date:"F j, Y" }} | {{ event.date|time:"g:i a" }} | {{ event.location }}
+                    Hosted by {{ event.creator.username }} | {{ event.date|date:"F j, Y" }} | {{ event.date|time:"g:i a" }}
                 </p>
-                <div class="attendance-badges mb-3">
-                    <span class="badge bg-success me-2">
-                        <i class="fas fa-check-circle">{} Going</i>
-                    </span>
-                    <span class="badge badge-warning m2-2 text-dark">
-                        <i class="fas fa-check-circle">{}  Maybe</i>
-                    </span>
+                <p class="event-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ event.loaction }}
+                </p>
+
+                <!-- Attendance status -->
+                {% if user.is_authenticated %}
+                <div class="attendance_buttons mt-3">
+                    <a href="#" class="btn btn-success btn-sm">Attending</a>
+                    <a href="#" class="btn btn-warning btn-sm">Maybe</a>
+                    <a href="#" class="btn btn-danger btn-sm">Can't Attend</a>
                 </div>
+                {% endif %}
             </div>
-    
-            <!-- ADD ----------------- Image col -->
     
     
         </div>
