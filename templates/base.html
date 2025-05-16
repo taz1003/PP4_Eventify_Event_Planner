@@ -26,7 +26,7 @@
 
 	<body>
 		<!-- Navigation -->
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="{% url 'event_list' %}">Eventify</a>
 				<button
@@ -70,24 +70,26 @@
 		{% endblock %}
 
 		<!-- Footer -->
-		<footer class="bg-light text-center">
+		<hr class="footer-hr">
+		<footer class="text-center">
 			<div class="container p-4">
 				<section class="mb-4">
 					<a class="btn text-white btn-floating m-1" style="background-color: #3b5998" href="#"
 						><i class="fab fa-facebook-f"></i
 					></a>
-					<a class="btn text-white btn-floating m-1" style="background-color: #55acee" href="#"><i class="fab fa-twitter"></i></a>
-					<a class="btn text-white btn-floating m-1" style="background-color: #dd4b39" href="#"><i class="fab fa-google"></i></a>
-					<a class="btn text-white btn-floating m-1" style="background-color: #ac2bac" href="#"
-						><i class="fab fa-instagram"></i
-					></a>
-					<a class="btn text-white btn-floating m-1" style="background-color: #0082ca" href="#"
-						><i class="fab fa-linkedin-in"></i
-					></a>
-					<a class="btn text-white btn-floating m-1" style="background-color: #333333" href="#"><i class="fab fa-github"></i></a>
+					<a class="btn text-white btn-floating m-1" style="background-color: #55acee" href="#">
+						<i class="fab fa-twitter"></i></a>
+					<a class="btn text-white btn-floating m-1" style="background-color: #dd4b39" href="#">
+						<i class="fab fa-google"></i></a>
+					<a class="btn text-white btn-floating m-1" style="background-color: #ac2bac" href="#">
+						<i class="fab fa-instagram"></i></a>
+					<a class="btn text-white btn-floating m-1" style="background-color: #0082ca" href="#">
+						<i class="fab fa-linkedin-in"></i></a>
+					<a class="btn text-white btn-floating m-1" style="background-color: #333333" href="#">
+						<i class="fab fa-github"></i></a>
 				</section>
 			</div>
-			<div class="text-center p-3 bg-light text-muted">© 2025 Eventify | All Your Events In One Place</div>
+			<div class="text-center p-3 text-muted">© 2025 Eventify | All Your Events In One Place</div>
 		</footer>
 
 		<!-- JS -->
