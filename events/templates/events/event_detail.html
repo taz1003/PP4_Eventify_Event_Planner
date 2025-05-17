@@ -64,14 +64,14 @@
     <div class="col-12">
         <div class="comments-header">
             <h3><i class="far fa-comments"></i> Comments ({{ comment_count }})</h3>
-            <hr>
+            <hr class="comments-hr">
         </div>
     </div>
  </div>
  <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         {% for comment in comments %}
-        <div class="p-2 comments {% if not comment.approved and comment.author == user %} faded{% elif not comment.approved %} d-none {% endif %}">
+        <div class="comments {% if not comment.approved and comment.author == user %} faded{% elif not comment.approved %} d-none {% endif %}">
             <p class="font-weight-bold">
                 <strong>{{ comment.author.username }}</strong>
                 <span class="font-weight-normal">
@@ -97,13 +97,13 @@
     </div>
 
     <!-- Comment Form -->
-     <div class="col-md-4">
+     <div class="col-md-3">
         <div class="card mb-4 mt-3">
             <div class="card-body">
                 {% if user.is_authenticated %}
                 <h3>Leave a comment:</h3>
-                <p>Posting as: {{ user.username }}</p>
-                <form id="commentForm" method="post" style="margin-top: 1.3em;">
+                <p>Posting as: <strong>{{ user.username }}</strong></p>
+                <form id="commentForm" method="post">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
