@@ -1,34 +1,136 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
-{% load cloudinary %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% load crispy_forms_tags %} 
+{% load cloudinary %} 
 
 {% block content %}
 
-<div class="masthead">
-    <div class="container">
-        <div class="row g-0">
-            <div class="col-md-8 masthead-text">
-                <h1 class="event-title">{{ event.title }}</h1>
-                <p class="event-subtitle">
-                    Hosted by {{ event.creator.username }} | {{ event.date|date:"F j, Y" }} | {{ event.date|time:"g:i a" }}
-                </p>
-                <p class="event-location">
-                    <i class="fas fa-map-marker-alt"></i>
-                    {{ event.loaction }}
-                </p>
+<div class="container mt-4">
+	<div class="row">
+        <!-- Image -->
+		<div class="col-md-6">
+			<div class="event-image-container">
+				{% if event.featured_image %} 
 
-                <!-- Attendance status -->
-                {% if user.is_authenticated %}
-                <div class="attendance_buttons mt-3">
-                    <a href="#" class="btn btn-success btn-sm">Attending</a>
-                    <a href="#" class="btn btn-warning btn-sm">Maybe</a>
-                    <a href="#" class="btn btn-danger btn-sm">Can't Attend</a>
+                {% cloudinary event.featured_image class="card-img" alt=event.title %} 
+
+                {% else %}
+				<img src="{% static 'images/default.jpg' %}" alt="default event image" class="card-img" />
+				{% endif %}
+			</div>
+		</div>
+        <!-- Info -->
+         <div class="col-md-6">
+            <div class="event-info-card">
+                <h1 class="event-detail-title">{{ event.title }}</h1>
+
+                <div class="event-info">
+                    <p class="event-host">
+                        <i class="fas fa-user"></i> Hosted by {{ event.creator.username }}
+                    </p>
+                    <p class="event-date">
+                        <i class="fas fa-calendar-alt"></i> {{ event.date|date:"F j, Y" }}
+                    </p>
+                    <p class="event-time">
+                        <i class="fas fa-clock"></i> {{ event.date|time:"g:i A" }}
+                    </p>
+                    <p class="event-location">
+                        <i class="fas fa-map-marker-alt"></i> {{ event.location }}
+                    </p>
                 </div>
+                <!-- Description -->
+                <div class="event-description mt-4">
+                    <h4>About This Event</h4>
+                    <p>{{ event.description | safe }}</p>
+                </div>
+                <!-- Attendance btns -->
+                 {% if user.is_authenticated %}
+                 <div class="attendance-section mt-3">
+                    <h5>Will you attend?</h5>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-success">Attending</button>
+                        <button class="btn btn-warning">Maybe</button>
+                        <button class="btn btn-danger">Can't Attend</button>
+                    </div>
+                 </div>
+                 {% endif %}
+
+            </div>
+         </div>
+	</div>
+</div>
+<!-- Comment section -->
+ <div class="row mt-5">
+    <div class="col-12">
+        <div class="comments-header">
+            <h3><i class="far fa-comments"></i> Comments ({{ comment_count }})</h3>
+            <hr>
+        </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-md-8">
+        {% for comment in comments %}
+        <div class="p-2 comments {% if not comment.approved and comment.author == user %} faded{% elif not comment.approved %} d-none {% endif %}">
+            <p class="font-weight-bold">
+                <strong>{{ comment.author.username }}</strong>
+                <span class="font-weight-normal">
+                    <small>{{ comment.created_on }}</small>
+                </span>
+            </p>
+            <div id="comment {{ comment.id }}">
+                {{ comment.body|striptags }}
+            </div>
+            {% if not comment.approved and comment.author == user %}
+            <p class="approval">This comment is awaiting approval</p>
+            {% endif %}
+            {% if user.is_authenticated and comment.author == user %}
+            <button class="btn btn-sm btn-outline-primary" data-comment_id="{{ comment.id }}">
+                Edit
+            </button>
+            <button class="btn btn-sm btn-outline-danger" data-comment_id="{{ comment.id }}">
+                Delete
+            </button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Comment Form -->
+     <div class="col-md-4">
+        <div class="card mb-4 mt-3">
+            <div class="card-body">
+                {% if user.is_authenticated %}
+                <h3>Leave a comment:</h3>
+                <p>Posting as: {{ user.username }}</p>
+                <form id="commentForm" method="post" style="margin-top: 1.3em;">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
+                </form>
+                {% else %}
+                <p>Log in to leave a comment</p>
                 {% endif %}
             </div>
-    
-    
+        </div>
+     </div>
+ </div>
+
+ <!-- Delete confirmation modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your comment? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+            </div>
         </div>
     </div>
 </div>

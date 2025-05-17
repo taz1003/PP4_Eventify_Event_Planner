@@ -10,6 +10,7 @@ from cloudinary.models import CloudinaryField
 class Event(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
+    excerpt = models.TextField(blank=True)
     description = models.TextField()
     featured_image = CloudinaryField('image', blank=True, null=True)
     date = models.DateTimeField()

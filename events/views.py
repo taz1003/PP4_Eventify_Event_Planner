@@ -39,7 +39,7 @@ def event_detail(request, slug):
         "events/event_detail.html",
         {
             "event": event,
-            "comments": comment,
+            "comments": comments,
             "comment_count": comment_count,
             "comment_form": comment_form
         },
