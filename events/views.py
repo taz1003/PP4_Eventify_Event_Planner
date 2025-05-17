@@ -20,6 +20,10 @@ def event_detail(request, slug):
     comments = event.comments.filter(approved=True).order_by("-created_on")
     comment_count = comments.count()
     comment_form = CommentForm()
+    user_attendance = None
+
+    if request.user.is_authenticated:
+        user_attendance = Attendance.objects.filter(user=request.user, event=event).first()
 
     if request.method == "POST":
         comment_form = CommentForm(data=request.POST)
@@ -41,6 +45,7 @@ def event_detail(request, slug):
             "event": event,
             "comments": comments,
             "comment_count": comment_count,
-            "comment_form": comment_form
+            "comment_form": comment_form,
+            "user_attendance": user_attendance,
         },
     )
