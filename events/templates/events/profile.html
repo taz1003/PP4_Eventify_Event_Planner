@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="profile-h2 mb-4">Your Profile</h2>
+
+    <hr class="profile-hr">
+
+    <h4 class="profile-h4">Your created events</h4>
+    <ul class="list-group mb-4">
+        {% for event in created_events %}
+        <li class="list-group-item">
+            <a href="{% url 'event_detail' event.slug %}">{{ event.title }}</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">
+            You haven't created any events
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h4 class="profile-h4">Events you marked "Attending"</h4>
+    <ul class="list-group mb-4">
+        {% for a in attending %}
+        <li class="list-group-item">
+            <a href="{% url 'event_detail' a.event.slug %}">{{ a.event.title }}</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">You are not attending any events</li>
+        {% endfor %}
+    </ul>
+
+    <h4 class="profile-h4">Events you marked "Maybe"</h4>
+    <ul class="list-group mb-4">
+        {% for a in maybe %}
+        <li class="list-group-item">
+            <a href="{% url 'event_detail' a.event.slug %}">{{ a.event.title }}</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No events marked "Maybe"</li>
+        {% endfor %}
+    </ul>
+
+    <h4 class="profile-h4">Events you marked "Can't Attend"</h4>
+    <ul class="list-group mb-4">
+        {% for a in not_attending %}
+        <li class="list-group-item">
+            <a href="{% url 'event_detail' a.event.slug %}">{{ a.event.title }}</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No events marked "Can't Attend"</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h4 class="profile-h4">Change Password</h4>
+    <form method="post" class="mb-5">
+        {% csrf_token %}
+        {{ password_form.as_p }}
+        <button class="btn btn-primary" type="submit">Change Password</button>
+    </form>
+
+</div>
+
+{% endblock %}

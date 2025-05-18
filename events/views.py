@@ -188,3 +188,33 @@ def delete_event(request, slug):
 
     messages.error(request, 'Invalid request')
     return redirect('event_detail', slug=slug)
+
+
+@login_required
+def profile_view(request):
+    user = request.user
+    created_events = Event.objects.filter(creator=user)
+    attending = Attendance.objects.filter(user=user, status='ATTENDING')
+    maybe = Attendance.objects.filter(user=user, status='MAYBE')
+    not_attending = Attendance.objects.filter(user=user, status='NOT_ATTENDING')
+
+    if request.method == 'POST':
+        password_form = PasswordChangeForm(user=user, data=request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Password updated successfully')
+            return redirect('profile')
+    else:
+        password_form = PasswordChangeForm(user=user)
+        return render(
+            request,
+            "events/profile.html",
+            {
+                'created_events': created_events,
+                'attending': attending,
+                'maybe': maybe,
+                'not_attending': not_attending,
+                'password_form': password_form
+            }
+        )

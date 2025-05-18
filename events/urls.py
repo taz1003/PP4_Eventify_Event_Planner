@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.EventList.as_view(), name='event_list'),
     path('accounts/', include('allauth.urls')),
     path('create/', views.create_event, name='create_event'),
+    path('profile/', views.profile_view, name='profile'),
     path('<slug:slug>/', views.event_detail, name='event_detail'),
     path('<slug:slug>/edit/', views.edit_event, name='edit_event'),
     path('<slug:slug>/delete/', views.delete_event, name='delete_event'),

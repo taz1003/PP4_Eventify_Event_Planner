@@ -65,8 +65,12 @@ SUMMERNOTE_CONFIG = {
 }
 
 SITE_ID = 1
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Prevent automatic signup on social login
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
