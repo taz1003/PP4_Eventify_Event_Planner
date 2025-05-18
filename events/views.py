@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DeleteView
 from django.contrib.auth.decorators import login_required
 from .models import Event, Comment, Attendance
 from django.contrib import messages
-from .forms import CommentForm
+from .forms import CommentForm, EventForm
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -116,3 +119,26 @@ def update_attendance(request, slug, status):
 
     messages.success(request, f"You selected '{attendance.get_status_display()}'.")
     return redirect('event_detail', slug=slug)
+
+
+@login_required
+def create_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid:
+            event = form.save(commit=False)
+            event.creator = request.user
+            event.save()
+            messages.success(request, 'Event created successully')
+            return redirect('event_detail', slug=event.slug)
+    else:
+        form = EventForm()
+
+    return render(
+        request,
+        "events/event_form.html",
+        {
+            'form': form,
+            'action': 'create'
+        }
+    )
