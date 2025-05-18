@@ -5,6 +5,10 @@ from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(Event)
 class EventsAdmin(SummernoteModelAdmin):
+    """
+    Admin interface for managing Events with Summernote rich text editing.
+    Configures display, filtering, search, and auto-slug generation.
+    """
 
     list_display = ('title', 'creator', 'date', 'location', 'created_on')
     search_fields = ('title', 'description', 'location')
@@ -17,6 +21,10 @@ class EventsAdmin(SummernoteModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(SummernoteModelAdmin):
+    """
+    Admin interface for managing Comments with approval functionality.
+    Includes bulk approval action and filters for moderation workflow.
+    """
 
     list_display = ('author', 'event', 'created_on', 'approved')
     list_filter = ('approved', 'created_on')
@@ -29,6 +37,10 @@ class CommentAdmin(SummernoteModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(SummernoteModelAdmin):
+    """
+    Admin interface for managing Attendance records.
+    Allows direct editing of status and provides date-based navigation.
+    """
 
     list_display = ('user', 'event', 'status', 'updated_on')
     list_filter = ('status', 'updated_on')

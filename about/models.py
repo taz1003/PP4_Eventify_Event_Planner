@@ -5,6 +5,15 @@ from cloudinary.models import CloudinaryField
 
 
 class About(models.Model):
+    """
+    Model representing the 'About' page content.
+    Attributes:
+    Stores 'About' page content with title, content, image, and metadata.
+    Auto-updates timestamp when modified.
+
+    Methods:
+        __str__: Returns the title of the about page for display purposes.
+    """
     title = models.CharField(max_length=200)
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()

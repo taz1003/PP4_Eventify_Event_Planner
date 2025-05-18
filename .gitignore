@@ -10,3 +10,6 @@ __pycache__/
 node_modules/
 .github/
 cloudinary_python.txt
+events/fixtures
+package-lock.json
+package.json

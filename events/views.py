@@ -13,6 +13,16 @@ from .forms import CommentForm, EventForm
 
 
 class EventList(ListView):
+    """
+    Displays a paginated list of upcoming events.
+
+    Attributes:
+        model: Event - The model to display
+        template_name: 'events/index.html' - Template for rendering
+        context_object_name: 'events' - Context variable name
+        paginate_by: 6 - Number of events per page
+    """
+
     model = Event
     template_name = "events/index.html"
     context_object_name = 'events'
@@ -20,17 +30,37 @@ class EventList(ListView):
 
 
 def event_detail(request, slug):
+    """
+    Displays detailed view of a single event with
+    comments and attendance options.
+
+    Args:
+        request: HttpRequest object
+        slug: Event's slug identifier
+
+    Returns:
+        Rendered event detail page with:
+        - Event details
+        - Comments (approved only count)
+        - Comment form
+        - Attendance status for current user
+        - Lists of attendees in each status category
+    """
     event = get_object_or_404(Event, slug=slug)
     comments = event.comments.all().order_by("-created_on")
     comment_count = comments.filter(approved=True).count()
 
     attendance = None
     if request.user.is_authenticated:
-        attendance = Attendance.objects.filter(user=request.user, event=event).first()
+        attendance = Attendance.objects.filter(
+            user=request.user, event=event).first()
 
-    attending_users = Attendance.objects.filter(event=event, status='ATTENDING').select_related('user')
-    maybe_users = Attendance.objects.filter(event=event, status='MAYBE').select_related('user')
-    not_attending_users = Attendance.objects.filter(event=event, status='NOT_ATTENDING').select_related('user')
+    attending_users = Attendance.objects.filter(
+        event=event, status='ATTENDING').select_related('user')
+    maybe_users = Attendance.objects.filter(
+        event=event, status='MAYBE').select_related('user')
+    not_attending_users = Attendance.objects.filter(
+        event=event, status='NOT_ATTENDING').select_related('user')
 
     if request.method == "POST":
         comment_form = CommentForm(data=request.POST)
@@ -43,8 +73,9 @@ def event_detail(request, slug):
                 request, messages.SUCCESS,
                 'Comment submitted and awaiting approval'
             )
-
-    comment_form = CommentForm()
+            comment_form = CommentForm()
+    else:
+        comment_form = CommentForm()
 
     return render(
         request,
@@ -63,6 +94,22 @@ def event_detail(request, slug):
 
 
 def comment_edit(request, slug, comment_id):
+    """
+        Handles editing of existing comments.
+
+    Args:
+        request: HttpRequest object
+        slug: Event's slug identifier
+        comment_id: ID of comment to edit
+
+    Returns:
+        - Redirect if unauthorized
+        - Rendered edit form on GET
+        - Saved comment and redirect on valid POST
+
+    Restrictions:
+        Only comment author can edit
+    """
 
     event = get_object_or_404(Event, slug=slug)
     comment = get_object_or_404(Comment, pk=comment_id)
@@ -93,21 +140,48 @@ def comment_edit(request, slug, comment_id):
 
 
 def comment_delete(request, slug, comment_id):
+    """
+    Deletes a comment after authorization check.
 
-        event = get_object_or_404(Event, slug=slug)
-        comment = get_object_or_404(Comment, pk=comment_id)
+    Args:
+        request: HttpRequest object
+        slug: Event's slug identifier
+        comment_id: ID of comment to delete
 
-        if comment.author == request.user:
-            comment.delete()
-            messages.success(request, 'Comment Deleted!')
-        else:
-            messages.error(request, 'You are not authorised to delete this comment')
+    Returns:
+        Redirect to event detail page with status message
 
-        return HttpResponseRedirect(reverse('event_detail', args=[slug]))
+    Restrictions:
+        Only comment author can delete
+    """
+
+    event = get_object_or_404(Event, slug=slug)
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if comment.author == request.user:
+        comment.delete()
+        messages.success(request, 'Comment Deleted!')
+    else:
+        messages.error(
+            request, 'You are not authorised to delete this comment')
+    return HttpResponseRedirect(reverse('event_detail', args=[slug]))
 
 
 @login_required
 def update_attendance(request, slug, status):
+    """
+    Updates or creates user's attendance status for an event.
+
+    Args:
+        request: Authenticated HttpRequest
+        slug: Event's slug identifier
+        status: One of ['ATTENDING', 'MAYBE', 'NOT_ATTENDING']
+
+    Returns:
+        Redirect to event detail with updated status
+
+    Raises:
+        Redirect with error if invalid status
+    """
 
     event = get_object_or_404(Event, slug=slug)
 
@@ -115,16 +189,31 @@ def update_attendance(request, slug, status):
         messages.error(request, "Invalid attendance status")
         return redirect('event_detail', slug=slug)
 
-    attendance, created = Attendance.objects.get_or_create(user=request.user, event=event)
+    attendance, created = Attendance.objects.get_or_create(
+        user=request.user, event=event)
     attendance.status = status
     attendance.save()
 
-    messages.success(request, f"You selected '{attendance.get_status_display()}'.")
+    messages.success(
+        request, f"You selected '{attendance.get_status_display()}'.")
     return redirect('event_detail', slug=slug)
 
 
 @login_required
 def create_event(request):
+    """
+    Handles creation of new events.
+
+    Args:
+        request: Authenticated HttpRequest
+
+    Returns:
+        - Empty form on GET
+        - New event and redirect on valid POST
+
+    Context:
+        action: 'Create' - Form context for template
+    """
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
@@ -148,6 +237,23 @@ def create_event(request):
 
 @login_required
 def edit_event(request, slug):
+    """
+    Handles editing of existing events.
+
+    Args:
+        request: Authenticated HttpRequest
+        slug: Event's slug identifier
+
+    Returns:
+        - Redirect if unauthorized
+        - Pre-filled form on GET
+        - Updated event and redirect on valid POST
+
+    Restrictions:
+        Only event creator can edit
+    Context:
+        action: 'Edit' - Form context for template
+    """
     event = get_object_or_404(Event, slug=slug)
 
     if request.user != event.creator:
@@ -175,6 +281,20 @@ def edit_event(request, slug):
 
 @login_required
 def delete_event(request, slug):
+    """
+    Handles event deletion after confirmation.
+
+    Args:
+        request: Authenticated HttpRequest
+        slug: Event's slug identifier
+
+    Returns:
+        - Redirect to event list if deleted
+        - Redirect to event if unauthorized
+
+    Restrictions:
+        Only event creator can delete
+    """
     event = get_object_or_404(Event, slug=slug)
 
     if request.user != event.creator:
@@ -192,11 +312,27 @@ def delete_event(request, slug):
 
 @login_required
 def profile_view(request):
+    """
+    Displays user profile with their events and attendance.
+
+    Args:
+        request: Authenticated HttpRequest
+
+    Returns:
+        Rendered profile page showing:
+        - Created events
+        - Events by attendance status
+        - Password change form
+
+    Handles:
+        POST requests for password changes
+    """
     user = request.user
     created_events = Event.objects.filter(creator=user)
     attending = Attendance.objects.filter(user=user, status='ATTENDING')
     maybe = Attendance.objects.filter(user=user, status='MAYBE')
-    not_attending = Attendance.objects.filter(user=user, status='NOT_ATTENDING')
+    not_attending = Attendance.objects.filter(
+        user=user, status='NOT_ATTENDING')
 
     if request.method == 'POST':
         password_form = PasswordChangeForm(user=user, data=request.POST)
