@@ -72,25 +72,35 @@
     <div class="col-md-7">
         {% for comment in comments %}
         <div class="comments {% if not comment.approved and comment.author == user %} faded{% elif not comment.approved %} d-none {% endif %}">
-            <p class="font-weight-bold">
+            <div class="font-weight-bold">
                 <strong>{{ comment.author.username }}</strong>
                 <span class="font-weight-normal">
-                    <small>{{ comment.created_on }}</small>
+                    <small>{{ comment.created_on|date:"F j, Y / g:i A" }}</small>
                 </span>
-            </p>
-            <div id="comment {{ comment.id }}">
-                {{ comment.body|striptags }}
             </div>
+            <div id="comment {{ comment.id }}">
+                {{ comment.body | striptags | linebreaks }}
+            </div>
+
             {% if not comment.approved and comment.author == user %}
-            <p class="approval">This comment is awaiting approval</p>
+            <p class="approval"><i class="fas fa-clock"></i> This comment is awaiting approval</p>
             {% endif %}
+
             {% if user.is_authenticated and comment.author == user %}
-            <button class="btn btn-sm btn-outline-primary" data-comment_id="{{ comment.id }}">
-                Edit
-            </button>
-            <button class="btn btn-sm btn-outline-danger" data-comment_id="{{ comment.id }}">
-                Delete
-            </button>
+            <div class="comment-actions mt-2">
+                
+                <button class="btn btn-sm btn-outline-primary">
+                    <a href="{% url 'comment_edit' slug=event.slug comment_id=comment.id %}">Edit</a>
+                </button>
+
+                <button 
+                class="btn btn-sm btn-outline-danger delete-comment" 
+                data-comment_id="{{ comment.id }}"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal">
+                    Delete
+                </button>
+            </div>
             {% endif %}
         </div>
         {% endfor %}
@@ -103,8 +113,8 @@
                 {% if user.is_authenticated %}
                 <h3>Leave a comment:</h3>
                 <p>Posting as: <strong>{{ user.username }}</strong></p>
-                <form id="commentForm" method="post">
-                    {{ comment_form | crispy }}
+                <form id="commentForm" method="post" action="">
+                    {{ comment_form|crispy }}
                     {% csrf_token %}
                     <button id="submitButton" type="submit" class="btn btn-signup btn-lg">Submit</button>
                 </form>
@@ -135,4 +145,8 @@
     </div>
 </div>
 
+{% endblock content %}
+
+{% block extras %}
+<script src="{% static 'js/comments.js' %}"></script>
 {% endblock %}
