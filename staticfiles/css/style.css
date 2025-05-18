@@ -47,6 +47,7 @@ a:hover {
 	color: #ffffff;
 	font-size: xx-large;
 	font: 800;
+	text-decoration: none;
 }
 
 /* Buttons */
@@ -335,4 +336,18 @@ footer .text-muted {
 .cancel-button:hover {
 	color: #f5f7ff;
 	text-decoration: none;
+}
+
+/* Profile page */
+.profile-hr {
+	border: none;
+	height: 3px;
+	width: 90%;
+	margin: 2rem auto;
+	background-color: #5e73c2;
+	border-radius: 10px;
+}
+
+.profile-h4 {
+	color: #333;
 }

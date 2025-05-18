@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_summernote',
     'cloudinary',
     'events',
+    'about',
 ]
 
 # Summernote config

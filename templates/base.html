@@ -3,6 +3,7 @@
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
+{% url 'about' as about_url %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,9 +60,15 @@
 							<a class="nav-link {% if request.path == login_url %}active{% endif %}" href="{{ login_url }}">Login</a>
 						</li>
 						{% endif %}
-						<li class="nav-item">
-							<a class="nav-link" href="#">About</a>
-						</li>
+        			    <li class="nav-item">
+        			      <a
+        			        class="nav-link
+        			        {% if request.path == about_url %}active{%endif%}"
+        			        aria-current="page"
+        			        href="{% url 'about' %}"
+        			        >About</a
+        			      >
+        			    </li>
 					</ul>
 					<span class="navbar-text text-light">All your events in one place!</span>
 					<br>
