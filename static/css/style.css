@@ -309,3 +309,30 @@ footer .text-muted {
 .modal-title {
 	font-weight: 600;
 }
+
+/* Edit buttons */
+.event-edit-button {
+	background-color: #5e73c2;
+	color: #ffffff;
+}
+
+.event-edit-button:hover {
+	color: #ffffff;
+	background-color: #888eba;
+	text-decoration: none;
+}
+
+.edit-button:hover{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+/* Event create form */
+.cancel-button {
+	color: #ffffff;
+}
+
+.cancel-button:hover {
+	color: #f5f7ff;
+	text-decoration: none;
+}

@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Event, Comment, Attendance
 from django.contrib import messages
 from .forms import CommentForm, EventForm
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -99,7 +97,9 @@ def comment_delete(request, slug, comment_id):
 
         if comment.author == request.user:
             comment.delete()
-            messages.add_message(request, messages.SUCCESS, 'Comment Deleted!')
+            messages.success(request, 'Comment Deleted!')
+        else:
+            messages.error(request, 'You are not authorised to delete this comment')
 
         return HttpResponseRedirect(reverse('event_detail', args=[slug]))
 
@@ -169,3 +169,20 @@ def edit_event(request, slug):
             'action': 'Edit'
         }
     )
+
+
+@login_required
+def delete_event(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+
+    if request.user != event.creator:
+        messages.error(request, "You are not authorized to delete this event")
+        return redirect('event_detail', slug=event.slug)
+
+    if request.method == 'POST':
+        event.delete()
+        messages.success(request, "Event deleted successfuly")
+        return redirect('event_list')
+
+    messages.error(request, 'Invalid request')
+    return redirect('event_detail', slug=slug)

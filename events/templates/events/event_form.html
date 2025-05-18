@@ -12,7 +12,7 @@
                 {{ form|crispy }}
                 <button type="submit" class="btn btn-primary">Save</button>
                 <button class="btn btn-secondary">
-                    <a href="{% if event %}{% url 'event_detail' event.slug %}{% else %}{% url 'event_list' %}{% endif %}">Cancel</a>
+                    <a class="cancel-button" href="{% if event %}{% url 'event_detail' event.slug %}{% else %}{% url 'event_list' %}{% endif %}">Cancel</a>
                 </button>
             </form>
         </div>
