@@ -24,6 +24,17 @@
             <div class="event-info-card">
                 <h1 class="event-detail-title">{{ event.title }}</h1>
 
+                {% if user.is_authenticated and user == event.creator %}
+                <div class="event-actions mb-3">
+                    <button class="btn btn-primary">
+                        <a href="{% url 'edit_event' event.slug %}">Edit Event</a>
+                    </button>
+                    <button class="btn btn-danger">
+                        <a href="#">Delete Event</a>
+                    </button>
+                </div>
+                {% endif %}
+
                 <div class="event-info">
                     <p class="event-host">
                         <i class="fas fa-user"></i> Hosted by {{ event.creator.username }}

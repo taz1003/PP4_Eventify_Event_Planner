@@ -125,7 +125,7 @@ def update_attendance(request, slug, status):
 def create_event(request):
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
-        if form.is_valid:
+        if form.is_valid():
             event = form.save(commit=False)
             event.creator = request.user
             event.save()
@@ -139,6 +139,33 @@ def create_event(request):
         "events/event_form.html",
         {
             'form': form,
-            'action': 'create'
+            'action': 'Create'
+        }
+    )
+
+
+@login_required
+def edit_event(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+
+    if request.user != event.creator:
+        messages.error(request, "You are not authorized to edit this event")
+        return redirect('event_detail', slug=event.slug)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Event updated successfuly")
+            return redirect('event_detail', slug=event.slug)
+    else:
+        form = EventForm(instance=event)
+
+    return render(
+        request,
+        "events/event_form.html",
+        {
+            'form': form,
+            'action': 'Edit'
         }
     )
