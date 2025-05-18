@@ -48,11 +48,25 @@
                  <div class="attendance-section mt-3">
                     <h5>Will you attend?</h5>
                     <div class="btn-group" role="group">
-                        <button class="btn btn-success">Attending</button>
-                        <button class="btn btn-warning">Maybe</button>
-                        <button class="btn btn-danger">Can't Attend</button>
+                        <button class="btn btn-success">
+                            <a id="attend-button" href="{% url 'update_attendance' event.slug 'ATTENDING' %}">Attending</a>
+                        </button>
+                        <button class="btn btn-warning">
+                            <a id="maybe-button" href="{% url 'update_attendance' event.slug 'MAYBE' %}">Maybe</a>
+                        </button>
+                        <button class="btn btn-danger">
+                            <a id="not-attend-button" href="{% url 'update_attendance' event.slug 'NOT_ATTENDING' %}">Can't Attend</a>
+                        </button>
                     </div>
                  </div>
+                 {% endif %}
+                 <!-- Attendance -->
+                 {% if attendance %}
+                    <p class="mt-3 alert alert-info">
+                    You selected: <strong>{{ attendance.get_status_display }}</strong>
+                    </p>
+                 {% else %}
+                  <p class="mt-3 text-muted">You have not responded yet.</p>
                  {% endif %}
 
             </div>

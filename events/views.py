@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 from .models import Event, Comment, Attendance
 from django.contrib import messages
 from .forms import CommentForm
@@ -19,10 +20,14 @@ def event_detail(request, slug):
     event = get_object_or_404(Event, slug=slug)
     comments = event.comments.all().order_by("-created_on")
     comment_count = comments.filter(approved=True).count()
-    user_attendance = None
 
+    attendance = None
     if request.user.is_authenticated:
-        user_attendance = Attendance.objects.filter(user=request.user, event=event).first()
+        attendance = Attendance.objects.filter(user=request.user, event=event).first()
+
+    attending_users = Attendance.objects.filter(event=event, status='ATTENDING').select_related('user')
+    maybe_users = Attendance.objects.filter(event=event, status='MAYBE').select_related('user')
+    not_attending_users = Attendance.objects.filter(event=event, status='NOT_ATTENDING').select_related('user')
 
     if request.method == "POST":
         comment_form = CommentForm(data=request.POST)
@@ -46,7 +51,10 @@ def event_detail(request, slug):
             "comments": comments,
             "comment_count": comment_count,
             "comment_form": comment_form,
-            "user_attendance": user_attendance,
+            "attendance": attendance,
+            "attending_users": attending_users,
+            "maybe_users": maybe_users,
+            "not_attending_users": not_attending_users,
         },
     )
 
@@ -91,3 +99,20 @@ def comment_delete(request, slug, comment_id):
             messages.add_message(request, messages.SUCCESS, 'Comment Deleted!')
 
         return HttpResponseRedirect(reverse('event_detail', args=[slug]))
+
+
+@login_required
+def update_attendance(request, slug, status):
+
+    event = get_object_or_404(Event, slug=slug)
+
+    if status not in ['ATTENDING', 'MAYBE', 'NOT_ATTENDING']:
+        messages.error(request, "Invalid attendance status")
+        return redirect('event_detail', slug=slug)
+
+    attendance, created = Attendance.objects.get_or_create(user=request.user, event=event)
+    attendance.status = status
+    attendance.save()
+
+    messages.success(request, f"You selected '{attendance.get_status_display()}'.")
+    return redirect('event_detail', slug=slug)
