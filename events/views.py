@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from .models import Event, Comment, Attendance
 from django.contrib import messages
 from .forms import CommentForm, EventForm

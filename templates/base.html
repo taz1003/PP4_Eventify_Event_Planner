@@ -45,7 +45,7 @@
 							<a class="nav-link {% if request.path == home_url %}active{% endif %}" href="{{ home_url }}">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">About</a>
+							<a class="nav-link" href="#">Profile</a>
 						</li>
 						{% if user.is_authenticated %}
 						<li class="nav-item">
@@ -59,8 +59,17 @@
 							<a class="nav-link {% if request.path == login_url %}active{% endif %}" href="{{ login_url }}">Login</a>
 						</li>
 						{% endif %}
+						<li class="nav-item">
+							<a class="nav-link" href="#">About</a>
+						</li>
 					</ul>
 					<span class="navbar-text text-light">All your events in one place!</span>
+					<br>
+					{% if user.is_authenticated %}
+    				<span class="navbar-text text-end m-3">Logged in as {{ user }}</span>
+    				{% else %}
+    				<span class="navbar-text text-end m-3">Not logged in</span>
+    				{% endif %}
 				</div>
 			</div>
 		</nav>
