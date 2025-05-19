@@ -70,6 +70,8 @@ Eventify is a comprehensive event management platform built with Django that ena
     - User profiles showing created and attended events
     - Password change functionality
     - Visibility to attendee count for an event
+    - Willing users can fill up collaboration form, when done, an automated
+        email will be sent to the developer
 
 ![Event-profile](static/images/eventify-profile-page.png)
 
