@@ -7,6 +7,7 @@ from django.contrib.auth import update_session_auth_hash
 from .models import Event, Comment, Attendance
 from django.contrib import messages
 from .forms import CommentForm, EventForm
+from django.utils import timezone
 
 
 # Create your views here.
@@ -27,6 +28,17 @@ class EventList(ListView):
     template_name = "events/index.html"
     context_object_name = 'events'
     paginate_by = 6
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        date_filter = self.request.GET.get('date_filter')
+
+        if date_filter == 'upcoming':
+            queryset = queryset.filter(date__gte=timezone.now())
+        elif date_filter == 'past':
+            queryset = queryset.filter(date__lt=timezone.now())
+
+        return queryset.order_by('date')
 
 
 def event_detail(request, slug):
