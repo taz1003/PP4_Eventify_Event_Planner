@@ -4,9 +4,12 @@
 
 [view the full project here](https://eventify-event-planner-bfbfdef4c538.herokuapp.com/)
 
+[view the project MVC framework here](https://github.com/users/taz1003/projects/3/views/1)
+
 ## Table of Contents
 
 - Project overview
+- Agile methodology
 - Key Features
 - Technology Stack
 - Installation
@@ -35,6 +38,15 @@ Eventify is a comprehensive event management platform built with Django that ena
 
 ![Homepage](static/images/eventify-homepage-one.png)
 ![Homepage-2](static/images/eventify-homepage-two.png)
+
+## Agile Methodologyy
+
+    - Using GitHub Kanban Board as the MVC framework
+        the whole project was done through step by step process.
+
+    [View the framework here](https://github.com/users/taz1003/projects/3/views/1)
+
+![Kanban-board-MVC](static/images/event-agile.png)
 
 ## Key Features
 
