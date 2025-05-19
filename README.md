@@ -2,7 +2,9 @@
 
 ![Responsive Mockup](static/images/eventify-responsive.png)
 
-[view the full project here](https://eventify-event-planner-bfbfdef4c538.herokuapp.com/)
+[view the full project on GitHub here](https://github.com/taz1003/PP4_Eventify_Event_Planner)
+
+[view the deployed project here](https://eventify-event-planner-bfbfdef4c538.herokuapp.com/)
 
 [view the project MVC framework here](https://github.com/users/taz1003/projects/3/views/1)
 
