@@ -20,11 +20,6 @@
 							<form method="get" class="d-flex justify-content-center">
 								<div class="btn-group" role="group">
 									<a
-										href="?date_filter=all"
-										class="btn btn-outline-secondary {% if request.GET.date_filter == 'all' or not request.GET.date_filter %}active{% endif %}">
-										All Events
-									</a>
-									<a
 										href="?date_filter=upcoming"
 										class="btn btn-outline-secondary {% if request.GET.date_filter == 'upcoming' %}active{% endif %}">
 										Upcoming
@@ -33,6 +28,11 @@
 										href="?date_filter=past"
 										class="btn btn-outline-secondary {% if request.GET.date_filter == 'past' %}active{% endif %}">
 										Past Events
+									</a>
+									<a
+										href="?date_filter=all"
+										class="btn btn-outline-secondary {% if request.GET.date_filter == 'all' or not request.GET.date_filter %}active{% endif %}">
+										All Events
 									</a>
 								</div>
 							</form>
