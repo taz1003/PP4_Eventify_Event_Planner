@@ -119,7 +119,7 @@
 			<div id="comment {{ comment.id }}">{{ comment.body | striptags | linebreaks }}</div>
 
 			{% if not comment.approved and comment.author == user %}
-			<p class="approval"><i class="fas fa-clock"></i> This comment is awaiting approval</p>
+			<p class="approval"><i class="fas fa-clock"></i> Your comment is awaiting approval</p>
 			{% endif %} 
             {% if user.is_authenticated and comment.author == user %}
 			<div class="comment-actions mt-2">

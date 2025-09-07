@@ -94,3 +94,22 @@ class EventDetailViewTests(TestCase):
         self.assertEqual(comment.body, 'This is a test comment.')
         self.assertEqual(comment.event, self.event)
         self.assertEqual(comment.author, self.user)
+
+    def test_comment_approval_status(self):
+        self.client.login(username='testuser', password='pass1234')
+
+        self.client.post(
+            reverse('event_detail', args=[self.event.slug]),
+            data={
+                'body': 'This is a test comment.'
+            }
+        )
+
+        comment = Comment.objects.first()
+        self.assertFalse(comment.approved)
+
+        comment.approved = True
+        comment.save()
+
+        updated_comment = Comment.objects.first()
+        self.assertTrue(updated_comment.approved)
