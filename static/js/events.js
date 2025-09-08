@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+// JavaScript to handle dynamic form action for deleting events
 document.addEventListener("DOMContentLoaded", function () {
     const deleteEventButtons = document.querySelectorAll('.delete-event');
     const deleteEventForm = document.getElementById('deleteEventForm');

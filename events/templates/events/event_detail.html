@@ -12,7 +12,7 @@
 				{% if event.featured_image %} 
                 {% cloudinary event.featured_image class="card-img" alt=event.title %} 
                 {% else %}
-				<img src="{% static 'images/default.jpg' %}" alt="default event image" class="card-img" />
+				<img src="{% static 'images/default.jpg' %}" alt="default event image" class="card-img"/>
 				{% endif %}
 			</div>
 		</div>
@@ -101,7 +101,7 @@
 	<div class="col-12">
 		<div class="comments-header">
 			<h3><i class="far fa-comments"></i> Comments ({{ comment_count }})</h3>
-			<hr class="comments-hr" />
+			<hr class="comments-hr"/>
 		</div>
 	</div>
 </div>

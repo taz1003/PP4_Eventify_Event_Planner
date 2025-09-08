@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+// JavaScript to handle dynamic form action for deleting comments
 document.addEventListener("DOMContentLoaded", function () {
     // Handle delete buttons
     const deleteButtons = document.querySelectorAll('.delete-comment');
