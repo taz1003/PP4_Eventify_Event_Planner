@@ -351,3 +351,16 @@ footer .text-muted {
 .profile-h4 {
 	color: #333;
 }
+
+/* Hide "Forgot Password" link from login page */
+a[href*="password/reset"] {
+    display: none;
+}
+
+a[href="/accounts/password/reset/"] {
+    display: none;
+}
+
+#id_password_helptext a[href*="password/reset"] {
+    display: none !important;
+}
