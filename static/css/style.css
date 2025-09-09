@@ -356,3 +356,7 @@ footer .text-muted {
 a[href*="password/reset"] {
     display: none;
 }
+
+a[href="/accounts/password/reset/"] {
+    display: none;
+}
