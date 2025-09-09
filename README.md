@@ -529,7 +529,6 @@ This project is licensed under the [MIT](https://choosealicense.com/licenses/mit
 
 - All descriptive content was written with comprehensive support from [Grammarly](https://app.grammarly.com/) extension.
 - The webpage was designed using [MockFlow Wireframe](https://wireframepro.mockflow.com/).
-- The color palette used in the website was generated using [ColorSpace](https://mycolor.space/) palette generator.
 
 ### Code
 
