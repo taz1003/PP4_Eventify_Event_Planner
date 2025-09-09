@@ -527,22 +527,22 @@ This project is licensed under the [MIT](https://choosealicense.com/licenses/mit
 
 ### Content and Design
 
-    - All descriptive content was written with comprehensive support from [Grammarly](https://app.grammarly.com/) extension.
-    - The webpage was designed using [MockFlow Wireframe](https://wireframepro.mockflow.com/).
-    - The color palette used in the website was generated using [ColorSpace](https://mycolor.space/) palette generator.
+- All descriptive content was written with comprehensive support from [Grammarly](https://app.grammarly.com/) extension.
+- The webpage was designed using [MockFlow Wireframe](https://wireframepro.mockflow.com/).
+- The color palette used in the website was generated using [ColorSpace](https://mycolor.space/) palette generator.
 
 ### Code
 
-    - Majority of the code was applied following [Django Documentation](https://docs.djangoproject.com/en/4.2/)
-        and the Code Institute Codestar Blog App project.
-    - Huge credit to the fellow coders at Reddit, YouTube and Twitter for helping with code snippets
-    - Huge credit to fellow Code Institute coders at Slack
+- Majority of the code was applied following [Django Documentation](https://docs.djangoproject.com/en/4.2/)
+    and the Code Institute Codestar Blog App project.
+- Huge credit to the fellow coders at Reddit, YouTube and Twitter for helping with code snippets
+- Huge credit to fellow Code Institute coders at Slack
 
 ## Acknowledgments
 
-    - My mentor and student care team from Code Institute
-    - Code Institute Org 
-    - Django Software Foundation
-    - Bootstrap team
-    - Cloudinary for image hosting
-    - All contributors to the open-source libraries used
+- My mentor and student care team from Code Institute
+- Code Institute Org 
+- Django Software Foundation
+- Bootstrap team
+- Cloudinary for image hosting
+- All contributors to the open-source libraries used
