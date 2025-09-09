@@ -114,54 +114,205 @@ The application provides:
 
 ## Key Features
 
-### Event Management
+### Homepage
 
-- Create, edit, and delete events
+- The landing page contains a navbar, events list that are paginated and a footer with all the social links
+- The events are listed based on their occuring date
+- There are 3 buttons for Upcoming, Past and All Events that automatically sort the events for the user
 
+![Homepage](static/images/eventify-homepage-one.png)
+![Homepage-2](static/images/eventify-homepage-two.png)
+
+### Event Details and Creation Page
+
+- Users can create, edit, and delete events
+
+![Event-detail](static/images/eventify-detail.png)
 ![Create-event](static/images/eventify-create.png)
 
 - Rich text descriptions with Summernote editor
-- Image uploads via Cloudinary
+- Image uploads via Cloudinary during event creation
+- Automatic slug generation during event creation
+- Date and location information requirement during event creation
+- The event creation form does not let users leave blank fields.
 
+![Event Creation Requirement](static/images/event-create-required.png)
 
+- Event details contain image, location, date-time, exerpt and description
+- Edit and Delete event buttons for the organizer
+- A safety/assurance modal is shown for the user when delete event button is clicked
 
-- Automatic slug generation
-- Date and location information
+![Delete Event](Static/images/event-delete-modal.png)
 
+- Three-tier attendance system (Attending/Maybe/Not Attending) that also shows the attendance count
 
-![Event-detail](static/images/eventify-detail.png)
+![Attendance](static/images/attendance.png)
 
-### User Interaction
+- Commenting with CRUD functionality alongside admin-approval workflow
+- Users can't publish blank comments
+- Dedicated comment-edit page
+- A safety/assurance modal is shown for the user when delete button is clicked
 
-    - Three-tier attendance system (Attending/Maybe/Not Attending)
-    - Commenting with CRUD functionality alongside admin-approval workflow
-    - User profiles showing created and attended events
-    - Password change functionality
-    - Visibility to attendee count for an event
-    - Willing users can fill up collaboration form, when done, an automated
-        email will be sent to the developer
+![Comment Edit](static/images/edit-comment.png)
 
-![Event-profile](static/images/eventify-profile-page.png)
+![Comment required](static/images/comment-required.png)
 
-### Discovery Features
+![Comment approval](static/images/comment-approval.png)
 
-    - Paginated event listings
-    - Date filtering (All/Upcoming/Past)
+![Comment delete modal](static/images/delete-comment-modal.png)
+
+### Profile Page
+
+- User profiles showing created and attended events along with username
+
+![Event-profile](static/images/eventify-profile.png)
+
+- Password change functionality
+
+![Password requirement](static/images/password-change-required.png)
 
 ### About Page
 
-    - Dedicated page about the information of the developer of this app
-    - Collaboration form for others with automated notification system
-
 ![About](static/images/eventify-about.png)
+
+- Dedicated page about the information of the developer of this app
+- Collaboration form for the users with automated emailing system
+- Willing users can fill the collaboration form and after clinking on `Send` an automated
+email will be sent to the developer
+- Notification for the user after the email has been sent to the developer
+
+![Collaboration Form Requirement](static/images/collab-form-required.png)
+
+![Collaboration email sent notification](static/images/collab-sent-notif.png)
+
+![Collaboration Email](static/images/email-recieved.png)
+
+### SignUp, Login and Logout page
+
+- **I intentionally kept email as optional due to one of my target users being younger students and poeple without access to emails but still willing to create events for their peers and communities**
+- **As such I decided to remove `Forgot Your Password` functionality since this requires emails or phone numbers**
+
+![Login Page](static/images/eventify-login.png)
+
+- New users have restricted access as they can't create events, post comments etc.
+- If they click on Profile link, they are redirected to the signUp page
+- Logged in users after clicking on Logout are sent to a confirmation page to make sure accidental logout don't happen
+- Users cannot have the same usernames and emails
+- Users also cannot leave any of the form element on these pages blank as they are required
+
+![User exists](static/images/user-exists.png)
+
+![SignUp Page](static/images/eventify-signup.png)
+
+![Signout Confirmation Page](static/images/signout-page.png)
 
 ### Admin Panel
 
-    - Summernote integration for rich text editing
-    - Advanced filtering and searching
-    - Bulk comment approval
-    - Attendance status management
-    - Account management
-    - Event management
+- Summernote integration for rich text editing
+- Advanced filtering and searching
+- Bulk comment approval
+- Attendance status management
+- Account management
+- Event management
 
 ![Admin-panel](static/images/eventify-admin.png)
+
+## Technology Stack
+
+### Backend
+
+- Python 3.13.3
+- Django 5.0
+- Django Allauth (Authentication)
+- Django Crispy Forms (Form styling)
+- Django Summernote (Rich text editing)
+- PostgreSQL (Production)
+- SQLite (Development)
+- Cloudinary (Image storage)
+- EmailJS (Automatic email service)
+
+### Frontend
+
+- HTML5, CSS3, JavaScript
+- Bootstrap 5
+- Font Awesome (Icons)
+- jQuery (DOM manipulation)
+
+### Deployments
+
+- GitHub
+- Heroku
+- WhiteNoise (Static files)
+- dj-database-url (Database configuration)
+
+## Installation
+
+### Prerequisites
+
+- Python
+- pip
+- PostgreSQL
+- Cloudinary account
+
+### Setup Instructions
+
+- Clone Repository
+- Create and activate a virtual environment
+- Install dependencies: `pip install -r requirements.txt`
+- Set up environment variables:
+    - **Create a .env file in the root directory with:**
+        - `SECRET_KEY=your_django_secret_key`
+        - `DATABASE_URL=your_database_url`
+        - `CLOUDINARY_URL=your_cloudinary_url`
+- Run migrations: `python manage.py migrate`
+- Create a superuser: `python manage.py createsuperuser`
+- Run the development server: `python manage.py runserver`
+
+## Configuration
+
+### Required Settings
+
+- Configure DATABASES in settings.py environment
+- Set up Cloudinary credentials in the .env file
+- Update allowed hosts for production domain
+
+### Optional Settings
+
+- Customize event display limits
+- Adjust pagination settings
+- Modify comment admin-approval workflow
+
+## Usage
+
+### For Event Organizers / Users
+
+- Create an account or log in
+- Click "Create Event" to add your event details
+- Manage your events through the profile page
+- Monitor attendee responses
+
+### For Users
+
+- Browse events using filters
+- Set your attendance status
+- Leave comments on events
+- Track your events in your profile
+
+### For Admin
+
+- Access the admin panel at /admin
+- Moderate comments and events
+- Manage user accounts
+- View system analytics
+
+## Admin Features
+
+- Rich text editing for event descriptions
+- Bulk actions for comment approval
+- Advanced filtering options
+- Quick edit functionality
+- Date-based hierarchy navigation
+
+## Testing
+
+- See [testing.md](testing.md) document for all the Tests done for this project
