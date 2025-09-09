@@ -33,24 +33,23 @@
 
 **All of the HTML files were tested on the [W3C HTML Markup Validation website](https://validator.w3.org/)**
 
-    1. Although I could've tested each specific page of the deployed project using `View page source`, and then copying the html for the validator, I opted for the raw html files for accuracy's sake. The html files that were tested are - base.html, index.html, profile.html, event_form.html, event_detail.html, comment_edit.html, login.html, logout.html and signup.html.
-    
-    2. In each case a similar Error was shown, for example - `Error: Bad value {% url 'event_detail' slug=event.slug %}`.
-    This can be ignored as the {% %} tags are Django template syntax, which the W3C validator does not understand. It expects rendered HTML, not templates.
+1. Although I could've tested each specific page of the deployed project using `View page source`, and then copying the html for the validator, I opted for the raw html files for accuracy's sake. The html files that were tested are - base.html, index.html, profile.html, event_form.html, event_detail.html, comment_edit.html, login.html, logout.html and signup.html.
 
-    3. In each case a similar Error was shown, for example - `Error: Non-space characters found without seeing a doctype first. Expected <!DOCTYPE html>`. This can also be ignored due to the raw file being written using Django template syntax.
+2. In each case a similar Error was shown, for example - `Error: Bad value {% url 'event_detail' slug=event.slug %}`.
+This can be ignored as the {% %} tags are Django template syntax, which the W3C validator does not understand. It expects rendered HTML, not templates.
 
-    ![Django error image 1](static/images/django-error-one.png)
+3. In each case a similar Error was shown, for example - `Error: Non-space characters found without seeing a doctype first. Expected <!DOCTYPE html>`. This can also be ignored due to the raw file being written using Django template syntax.
 
-    ![Django error image 2](static/images/django-error-two.png)
+![Django error image 1](static/images/django-error-one.png)
 
-    ![Django error image 3](static/images/django-error-three.png)
+![Django error image 2](static/images/django-error-two.png)
 
-    ![Django error image 4](static/images/django-error-four.png)
+![Django error image 3](static/images/django-error-three.png)
 
-    4. Such errors are repeated in all the tests for each file, all of which can be ignored since django's {% %} and {{ }} syntax lines never go to the browser. When Django renders the page, it replaces them with real HTML code.
+![Django error image 4](static/images/django-error-four.png)
 
-    5. Other than the django-syntax errors and infos, no other errors occured during the testing process of the files mentioned above.
+4. Such errors are repeated in all the tests for each file, all of which can be ignored since django's {% %} and {{ }} syntax lines never go to the browser. When Django renders the page, it replaces them with real HTML code.
+5. Other than the django-syntax errors and infos, no other errors occured during the testing process of the files mentioned above.
 
 ### 1.2 CSS Code Validating ###
 

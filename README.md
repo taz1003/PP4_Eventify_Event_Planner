@@ -142,7 +142,7 @@ The application provides:
 - Edit and Delete event buttons for the organizer
 - A safety/assurance modal is shown for the user when delete event button is clicked
 
-![Delete Event](Static/images/event-delete-modal.png)
+![Delete Event](static/images/event-delete-modal.png)
 
 - Three-tier attendance system (Attending/Maybe/Not Attending) that also shows the attendance count
 
