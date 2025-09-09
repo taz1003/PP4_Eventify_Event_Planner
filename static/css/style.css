@@ -362,5 +362,5 @@ a[href="/accounts/password/reset/"] {
 }
 
 #id_password_helptext a[href*="password/reset"] {
-	display: none !important;
+    display: none !important;
 }
